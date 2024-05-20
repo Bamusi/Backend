@@ -17,6 +17,11 @@ const TaskSchema = new mongoose.Schema({
         trim:true,
         default:'',
     }, 
+    gender:{
+        type:String,
+        trim:true,
+        default:'',
+    },
     phone:{
         type:String,
         required:[true,'Must provide email'],

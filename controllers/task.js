@@ -1,10 +1,9 @@
 const Task = require('../models/Task')
-const PostTask = require('../models/PostTask')
-const CompanyTask = require('../models/CompanyTask')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 // Task This is For User Info
 const JWT_SECRET = 'qQ90()/DGBAgGVhvhH{n}'
+
 
 const getAllTasks = async (req, res)=> {
     try {
@@ -135,140 +134,11 @@ const updateTask = async (req, res)=> {
         if(!task) {
             return res.status(404).json({msg:`No task with id : ${taskID}`})
         }
-        res.status(200).json({id:taskID, data:req.body})
+        res.status(200).json({task})
     } catch (error) {
         res.status(500).json({msg:error})
     }
 }
-
-// TaskPost This is For Post Info
-
-const getAllPostTasks = async (req, res)=> {
-    try {
-        const tasks = await PostTask.find({})
-        res.status(200).json({tasks}) 
-    } catch (error) {
-        res.status(500).json({msg:error})
-    }
-
-}
-
-const createPostTask = async (req, res)=> {
-    try {
-        const task = await PostTask.create(req.body)
-        res.status(201).json({task}) 
-    } catch (error) {
-        res.status(500).json({msg:error})
-    }
-    
-}
-
-const getPostTask = async (req, res)=> {
-    try {
-        const {id:taskID} = req.params
-        const task = await PostTask.findOne({_id:taskID})
-        if (!task) {
-            return res.status(404).json({msg:`No task with id : ${taskID}`})
-        }
-        res.status(200).json({task}) 
-    } catch (error) {
-        res.status(500).json({msg:error})
-    }
-}
-
-const deletePostTask = async (req, res)=> {
-    try {
-        const {id:taskID} = req.params;
-        const task = await PostTask.findOneAndDelete({_id:taskID});
-        if(!task) {
-            return res.status(404).json({msg:`No task with id : ${taskID}`})
-        }
-        res.status(200).json({task:null, status:'success'})
-    } catch (error) {
-        res.status(500).json({msg:error})
-    }    
-} 
-
-const updatePostTask = async (req, res)=> {
-    
-    try {
-        const {id:taskID} = req.params;
-
-        const task = await PostTask.findOneAndUpdate({_id:taskID}, req.body, {new:true, runValidators:true,})
-
-        if(!task) {
-            return res.status(404).json({msg:`No task with id : ${taskID}`})
-        }
-        res.status(200).json({id:taskID, data:req.body})
-    } catch (error) {
-        res.status(500).json({msg:error})
-    }
-}
-
-// TaskPost This is For Company Info
-
-const getAllCompanyTasks = async (req, res)=> {
-    try {
-        const tasks = await CompanyTask.find({})
-        res.status(200).json({tasks}) 
-    } catch (error) {
-        res.status(500).json({msg:error})
-    }
-
-}
-
-const createCompanyTask = async (req, res)=> {
-    try {
-        const task = await CompanyTask.create(req.body)
-        res.status(201).json({task}) 
-    } catch (error) {
-        res.status(500).json({msg:error})
-    }
-    
-}
-
-const getCompanyTask = async (req, res)=> {
-    try {
-        const {id:taskID} = req.params
-        const task = await CompanyTask.findOne({_id:taskID})
-        if (!task) {
-            return res.status(404).json({msg:`No task with id : ${taskID}`})
-        }
-        res.status(200).json({task}) 
-    } catch (error) {
-        res.status(500).json({msg:error})
-    }
-}
-
-const deleteCompanyTask = async (req, res)=> {
-    try {
-        const {id:taskID} = req.params;
-        const task = await CompanyTask.findOneAndDelete({_id:taskID});
-        if(!task) {
-            return res.status(404).json({msg:`No task with id : ${taskID}`})
-        }
-        res.status(200).json({task:null, status:'success'})
-    } catch (error) {
-        res.status(500).json({msg:error})
-    }    
-} 
-
-const updateCompanyTask = async (req, res)=> {
-    
-    try {
-        const {id:taskID} = req.params;
-
-        const task = await CompanyTask.findOneAndUpdate({_id:taskID}, req.body, {new:true, runValidators:true,})
-
-        if(!task) {
-            return res.status(404).json({msg:`No task with id : ${taskID}`})
-        }
-        res.status(200).json({id:taskID, data:req.body})
-    } catch (error) {
-        res.status(500).json({msg:error})
-    }
-}
-
 
 module.exports = {
     getAllTasks,
@@ -276,16 +146,6 @@ module.exports = {
     getTask,
     updateTask,
     deleteTask,
-    getAllPostTasks,
-    createPostTask,
-    getPostTask,
-    updatePostTask,
-    deletePostTask,
-    getAllCompanyTasks,
-    createCompanyTask,
-    getCompanyTask,
-    updateCompanyTask,
-    deleteCompanyTask,
     LoginTask,
     UserData,
     getUserTasks,
